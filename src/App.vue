@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <header>
-      <span class="md-headline">The Todo App</span>
+      <h1>Todo App</h1>
     </header>
-    <md-content class="md-elevation-3">
+    <md-content class="md-elevation-5">
       <main>
         <md-field style="margin: 5px 15px; width: auto">
           <md-input
@@ -12,7 +12,7 @@
             @keypress.enter="addtodo"
           ></md-input>
         </md-field>
-        <TodoItem :todos="todos" v-on:del-todo="deleteTodo"/>
+        <TodoItem :todos="todos" v-on:del-todo="deleteTodo" />
       </main>
     </md-content>
     <!-- <HelloWorld msg="Welcome to Your Fue.js App"/> -->
@@ -36,21 +36,46 @@ export default {
         { title: "Go to sleep", completed: false, id: uuidv4() },
       ],
       currentTodo: "",
-      addtodo: () => {
-        if (this.currentTodo.trim() === "") {
-          return false;
-        }
-        this.todos.unshift({
-          title: this.currentTodo,
-          completed: false,
-          id: uuidv4(),
-        });
-        this.currentTodo = "";
-      },
-      deleteTodo: (id) => { 
-        this.todos = this.todos.filter((todo) => todo.id !== id);
-      },
     };
+  },
+  mounted() {
+    if (localStorage.getItem("todos")) {
+      try {
+        this.todos = JSON.parse(localStorage.getItem("todos"));
+      } catch (e) {
+        localStorage.removeItem("todos");
+      }
+    }
+    this.$watch(
+      "todos",
+      function() {
+        console.log("Local storage updated");
+        this.saveToLocal();
+      },
+      { deep: true }
+    );
+  },
+  methods: {
+    saveToLocal() {
+      const parsed = JSON.stringify(this.todos);
+      localStorage.setItem("todos", parsed);
+    },
+    addtodo() {
+      if (this.currentTodo.trim() === "") {
+        return false;
+      }
+      this.todos.unshift({
+        title: this.currentTodo,
+        completed: false,
+        id: uuidv4(),
+      });
+
+      this.currentTodo = "";
+    },
+    deleteTodo(id) {
+      this.todos = this.todos.filter((todo) => todo.id !== id);
+
+    },
   },
 };
 </script>

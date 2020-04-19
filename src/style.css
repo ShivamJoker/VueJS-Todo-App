@@ -4,6 +4,7 @@ html {
   padding: 0;
   width: 100%;
   overflow: hidden;
+  background: #41b883;
 }
 #app {
   max-width: 600px;
@@ -17,8 +18,13 @@ html {
 
 header {
   margin-bottom: 15px;
+  color: #fdfeff;
+  font-weight: 500;
 }
+
 main {
   height: 400px;
   width: 400px;
 }
+
+
