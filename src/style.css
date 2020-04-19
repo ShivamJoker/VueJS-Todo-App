@@ -1,0 +1,24 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+#app {
+  max-width: 600px;
+  height: 100%;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+header {
+  margin-bottom: 15px;
+}
+main {
+  height: 400px;
+  width: 400px;
+}
